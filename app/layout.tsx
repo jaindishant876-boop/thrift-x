@@ -2,6 +2,11 @@ import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
+import { CartProvider } from '@/components/cart-provider'
+import { WishlistProvider } from '@/components/wishlist-provider'
+import { Navbar } from '@/components/navbar'
+import { Footer } from '@/components/footer'
+import { CartDrawer } from '@/components/cart-drawer'
 
 const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] })
 const geistMono = Geist_Mono({
@@ -49,7 +54,16 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} bg-background`}>
       <body className="font-sans antialiased">
-        {children}
+        <CartProvider>
+          <WishlistProvider>
+            <div className="flex min-h-screen flex-col bg-background text-foreground">
+              <Navbar />
+              <div className="flex-1">{children}</div>
+              <Footer />
+            </div>
+            <CartDrawer />
+          </WishlistProvider>
+        </CartProvider>
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>

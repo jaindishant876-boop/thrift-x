@@ -140,3 +140,20 @@ export const categories: Category[] = [
 
 export const formatPrice = (value: number) =>
   new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(value)
+
+export const getProductById = (id: string) => products.find((p) => p.id === id)
+
+export const getRelatedProducts = (product: Product, limit = 4) => {
+  const sameCategory = products.filter(
+    (p) => p.id !== product.id && p.category === product.category,
+  )
+  const others = products.filter(
+    (p) => p.id !== product.id && p.category !== product.category,
+  )
+  return [...sameCategory, ...others].slice(0, limit)
+}
+
+export const discountPercent = (product: Product) =>
+  product.originalPrice
+    ? Math.round((1 - product.price / product.originalPrice) * 100)
+    : 0
