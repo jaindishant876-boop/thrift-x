@@ -1,0 +1,71 @@
+import { Analytics } from '@vercel/analytics/next'
+import type { Metadata, Viewport } from 'next'
+import { Geist, Geist_Mono } from 'next/font/google'
+import './globals.css'
+import { CartProvider } from '@/components/cart-provider'
+import { WishlistProvider } from '@/components/wishlist-provider'
+import { Navbar } from '@/components/navbar'
+import { Footer } from '@/components/footer'
+import { CartDrawer } from '@/components/cart-drawer'
+
+const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] })
+const geistMono = Geist_Mono({
+  variable: '--font-geist-mono',
+  subsets: ['latin'],
+})
+
+export const metadata: Metadata = {
+  title: 'Thrift.x — Wear Rare. Own the Street.',
+  description:
+    'Premium thrift fashion, limited drops, and one-of-one streetwear pieces at prices that make sense.',
+  generator: 'v0.app',
+  icons: {
+    icon: [
+      {
+        url: '/icon-light-32x32.png',
+        media: '(prefers-color-scheme: light)',
+      },
+      {
+        url: '/icon-dark-32x32.png',
+        media: '(prefers-color-scheme: dark)',
+      },
+      {
+        url: '/icon.svg',
+        type: 'image/svg+xml',
+      },
+    ],
+    apple: '/apple-icon.png',
+  },
+}
+
+export const viewport: Viewport = {
+  colorScheme: 'light dark',
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: 'white' },
+    { media: '(prefers-color-scheme: dark)', color: 'black' },
+  ],
+}
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode
+}>) {
+  return (
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} bg-background`}>
+      <body className="font-sans antialiased">
+        <CartProvider>
+          <WishlistProvider>
+            <div className="flex min-h-screen flex-col bg-background text-foreground">
+              <Navbar />
+              <div className="flex-1">{children}</div>
+              <Footer />
+            </div>
+            <CartDrawer />
+          </WishlistProvider>
+        </CartProvider>
+        {process.env.NODE_ENV === 'production' && <Analytics />}
+      </body>
+    </html>
+  )
+}
