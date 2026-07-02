@@ -1,6 +1,9 @@
 import { CartProvider } from "@/components/cart-provider"
 import { Navbar } from "@/components/navbar"
 import { Hero } from "@/components/hero"
+import { FeaturedProducts } from "@/components/featured-products"
+import { Categories } from "@/components/categories"
+import { NewDrops } from "@/components/new-drops"
 import { ProductGrid } from "@/components/product-grid"
 import { Footer } from "@/components/footer"
 import { CartDrawer } from "@/components/cart-drawer"
@@ -12,6 +15,9 @@ export default function Home() {
         <Navbar />
         <main>
           <Hero />
+          <FeaturedProducts />
+          <Categories />
+          <NewDrops />
           <ProductGrid />
         </main>
         <Footer />

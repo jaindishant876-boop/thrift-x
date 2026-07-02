@@ -3,7 +3,13 @@
 import { ShoppingBag } from "lucide-react"
 import { useCart } from "@/components/cart-provider"
 
-const links = ["Home", "Shop", "New Drops", "About", "Contact"]
+const links = [
+  { label: "Home", href: "#" },
+  { label: "Shop", href: "#shop" },
+  { label: "Categories", href: "#categories" },
+  { label: "New Drops", href: "#new-drops" },
+  { label: "Contact", href: "#contact" },
+]
 
 export function Navbar() {
   const { totalItems, openCart } = useCart()
@@ -17,9 +23,9 @@ export function Navbar() {
 
         <ul className="hidden items-center gap-8 text-sm text-muted-foreground md:flex">
           {links.map((link) => (
-            <li key={link}>
-              <a href="#shop" className="transition-colors hover:text-primary">
-                {link}
+            <li key={link.label}>
+              <a href={link.href} className="transition-colors hover:text-primary">
+                {link.label}
               </a>
             </li>
           ))}
